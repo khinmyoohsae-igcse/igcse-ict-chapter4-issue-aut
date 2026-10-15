@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IGCSE ICT - Network Security & Authentication Quiz (30 MCQs)</title>
+    <style>
+        :root {
+            --bg-main: #090d16;
+            --bg-card: #131d31;
+            --border-color: #223354;
+            --accent: #38bdf8;
+            --accent-hover: #0ea5e9;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        header {
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1.5rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        header h1 {
+            color: var(--accent);
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.35rem;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        main {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .quiz-status {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .score-pill {
+            background-color: #0c4a6e;
+            color: #7dd3fc;
+            padding: 0.35rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid #0284c7;
+        }
+
+        .card {
+            width: 100%;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 1.25rem;
+            padding: 2rem;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #f1f5f9;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .option-btn {
+            width: 100%;
+            text-align: left;
+            background-color: #1e293b;
+            color: var(--text-main);
+            padding: 1rem 1.25rem;
+            border-radius: 0.85rem;
+            border: 1px solid #334155;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background-color: #283548;
+            border-color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        .option-btn:disabled {
+            cursor: not-allowed;
+        }
+
+        .option-btn.correct {
+            background-color: #064e3b !important;
+            border-color: #059669 !important;
+            color: #ecfdf5 !important;
+        }
+
+        .option-btn.incorrect {
+            background-color: #7f1d1d !important;
+            border-color: #dc2626 !important;
+            color: #fee2e2 !important;
+        }
+
+        .feedback-box {
+            padding: 1.15rem;
+            border-radius: 0.85rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .feedback-box.correct-feedback {
+            background-color: #022c22;
+            border: 1px solid #047857;
+            color: #a7f3d0;
+        }
+
+        .feedback-box.incorrect-feedback {
+            background-color: #450a0a;
+            border: 1px solid #b91c1c;
+            color: #fecdd3;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: #0f172a;
+            font-weight: 700;
+            padding: 0.85rem 1.75rem;
+            border-radius: 0.85rem;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .results-card {
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        .results-card h2 {
+            font-size: 2.25rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .results-card p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        footer {
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>IGCSE ICT Practice Quiz</h1>
+        <p>Topics 4.2.1 Security Issues, 4.2.2 Passwords, 4.2.3 Other Authentication Methods</p>
+    </header>
+
+    <main>
+        <div class="quiz-status">
+            <span id="question-counter">Question 1 of 30</span>
+            <span id="score-display" class="score-pill">Score: 0</span>
+        </div>
+
+        <!-- Quiz Container -->
+        <div id="quiz-container" class="card">
+            <div id="question-box" class="question-text">
+                Loading question...
+            </div>
+
+            <div id="options-container" class="options-list">
+                <!-- Options populated dynamically -->
+            </div>
+
+            <div id="feedback-box" class="feedback-box hidden">
+                <!-- Feedback populated dynamically -->
+            </div>
+
+            <div style="display: flex; justify-content: flex-end;">
+                <button id="next-btn" onclick="nextQuestion()" class="btn-primary hidden">Next Question</button>
+            </div>
+        </div>
+
+        <!-- Results Container -->
+        <div id="results-container" class="card results-card hidden">
+            <h2>Quiz Completed! 🎉</h2>
+            <p id="final-score">You scored X out of 30</p>
+            <button onclick="restartQuiz()" class="btn-primary">Restart Quiz</button>
+        </div>
+    </main>
+
+    <footer>
+        IGCSE ICT Revision &bull; Network Security & Authentication
+    </footer>
+
+    <script>
+        const questions = [
+            // 4.2.1 Security issues regarding data transfer (Questions 1 to 10)
+            {
+                question: "What is encryption in the context of data transfer across computer networks?",
+                options: [
+                    { text: "The process of scrambling plaintext data into unreadable ciphertext using an encryption key so unauthorized interceptors cannot understand it", isCorrect: true, rationale: "Encryption scrambles data so that even if intercepted during transfer, it remains completely unreadable without the decryption key." },
+                    { text: "The compression of large video files to save storage space on hard drives", isCorrect: false, rationale: "This describes file compression, not network data security encryption." },
+                    { text: "The formatting of optical CD-ROM discs into spiral tracks", isCorrect: false, rationale: "This describes disc formatting." },
+                    { text: "The physical printing of paper documents using toner powder", isCorrect: false, rationale: "This describes laser printing." }
+                ]
+            },
+            {
+                question: "What is the difference between plaintext and ciphertext?",
+                options: [
+                    { text: "Plaintext is readable original data, whereas ciphertext is the scrambled, encrypted version of that data", isCorrect: true, rationale: "Plaintext is the readable message before encryption; ciphertext is the unreadable scrambled output after encryption." },
+                    { text: "Plaintext is stored on magnetic tape, while ciphertext is stored on solid-state drives", isCorrect: false, rationale: "Both plaintext and ciphertext are digital data formats independent of storage media." },
+                    { text: "Plaintext is used in routers, while ciphertext is used in switches", isCorrect: false, rationale: "This is incorrect." },
+                    { text: "There is no difference between plaintext and ciphertext", isCorrect: false, rationale: "One is readable, the other is scrambled." }
+                ]
+            },
+            {
+                question: "What is the role of an encryption key in network security?",
+                options: [
+                    { text: "A secret algorithm parameter used to encrypt plaintext into ciphertext and decrypt ciphertext back into readable plaintext", isCorrect: true, rationale: "The encryption key locks and unlocks the scrambled data during secure network transmissions." },
+                    { text: "A physical metal key used to lock computer server room doors", isCorrect: false, rationale: "An encryption key is a digital software code, not a metal door key." },
+                    { text: "A password used to unlock smartphone screen displays", isCorrect: false, rationale: "Screen locks are authentication PINs." },
+                    { text: "A cable adapter used to plug Ethernet cords into routers", isCorrect: false, rationale: "This is a network cable connector." }
+                ]
+            },
+            {
+                question: "What is a 'packet sniffing' (or eavesdropping) attack on a network?",
+                options: [
+                    { text: "An unauthorized cyberattack where data packets traveling across a network are intercepted and read by hackers", isCorrect: true, rationale: "Packet sniffers monitor network traffic to capture unencrypted data such as passwords and personal messages." },
+                    { text: "A hardware malfunction where network routers drop packet connections", isCorrect: false, rationale: "This describes network packet loss." },
+                    { text: "A physical cleaning method for removing dust from Ethernet ports", isCorrect: false, rationale: "This is hardware maintenance." },
+                    { text: "A method for measuring Wi-Fi signal strength", isCorrect: false, rationale: "This is signal surveying." }
+                ]
+            },
+            {
+                question: "What is a 'man-in-the-middle' (MitM) attack?",
+                options: [
+                    { text: "An attack where a cybercriminal secretly intercepts and relays communications between two parties who believe they are directly communicating with each other", isCorrect: true, rationale: "In a MitM attack, the attacker positions themselves between a user and a server to steal data or alter messages." },
+                    { text: "A physical altercation between office workers in a server room", isCorrect: false, rationale: "This is workplace behavior, not a cyberattack." },
+                    { text: "A routing error where data packets bounce between two switches endlessly", isCorrect: false, rationale: "This describes a network routing loop." },
+                    { text: "A printer paper jam occurring in the middle of a print job", isCorrect: false, rationale: "This is a printer mechanical issue." }
+                ]
+            },
+            {
+                question: "What is malware (malicious software) and how does it threaten network security?",
+                options: [
+                    { text: "Software designed to infiltrate, damage, or steal data from computer systems and networks (such as viruses, trojans, and spyware)", isCorrect: true, rationale: "Malware includes viruses, worms, and spyware that compromise network endpoints and steal sensitive data." },
+                    { text: "Software used for editing digital photographs and videos", isCorrect: false, rationale: "This describes legitimate creative media software." },
+                    { text: "Operating system utility software for formatting disk drives", isCorrect: false, rationale: "This is system utility software." },
+                    { text: "Network driver software for connecting Wi-Fi cards", isCorrect: false, rationale: "This is hardware driver software." }
+                ]
+            },
+            {
+                question: "What is a computer virus?",
+                options: [
+                    { text: "A malicious software program that attaches itself to legitimate files or programs and replicates itself to spread across a network or system", isCorrect: true, rationale: "Viruses spread by infecting executable files and replicating when those files are shared or executed." },
+                    { text: "A biological illness transmitted between human office workers", isCorrect: false, rationale: "Biological viruses affect human health, whereas computer viruses affect software files." },
+                    { text: "A hardware failure caused by overheating CPU microchips", isCorrect: false, rationale: "This describes thermal overheating." },
+                    { text: "A broken Ethernet cable causing internet disconnection", isCorrect: false, rationale: "This is a physical network fault." }
+                ]
+            },
+            {
+                question: "What is spyware?",
+                options: [
+                    { text: "Malware that secretly records user activity (such as keystrokes, passwords, and browsing history) and transmits it to an attacker", isCorrect: true, rationale: "Spyware monitors user actions covertly, capturing confidential login credentials and personal data." },
+                    { text: "Software used by network administrators to monitor legitimate bandwidth usage", isCorrect: false, rationale: "Network monitoring tools are administrative utilities, whereas spyware is malicious." },
+                    { text: "An optical camera mounted on security building walls", isCorrect: false, rationale: "This describes physical CCTV cameras." },
+                    { text: "An encrypted firewall security protocol", isCorrect: false, rationale: "This is network protection." }
+                ]
+            },
+            {
+                question: "What is a phishing attack?",
+                options: [
+                    { text: "A fraudulent cyberattack where attackers impersonate legitimate organizations (via fake emails or websites) to trick users into revealing sensitive personal data", isCorrect: true, rationale: "Phishing uses deceptive emails or websites disguised as trusted entities to steal bank details and passwords." },
+                    { text: "A sport where people catch fish using rods and nets in a lake", isCorrect: false, rationale: "This is outdoor recreational fishing." },
+                    { text: "An automated network scan for finding open router ports", isCorrect: false, rationale: "This describes port scanning." },
+                    { text: "A method for recovering deleted files from hard drives", isCorrect: false, rationale: "This is data recovery." }
+                ]
+            },
+            {
+                question: "Why is https:// (Hypertext Transfer Protocol Secure) safer than http:// when browsing websites?",
+                options: [
+                    { text: "HTTPS encrypts all data transferred between the user's web browser and the web server using SSL/TLS protocols", isCorrect: true, rationale: "HTTPS adds cryptographic encryption to web traffic, preventing eavesdropping and tampering during data transfer." },
+                    { text: "HTTPS downloads web pages at zero internet data cost", isCorrect: false, rationale: "HTTPS provides security encryption, not free internet data." },
+                    { text: "HTTPS prevents computer monitor screens from glowing too brightly", isCorrect: false, rationale: "Monitor brightness is adjusted in hardware settings." },
+                    { text: "HTTPS allows computers to run without an operating system", isCorrect: false, rationale: "An operating system is always required." }
+                ]
+            },
+
+            // 4.2.2 Passwords (Questions 11 to 20)
+            {
+                question: "What is a password in computer system security?",
+                options: [
+                    { text: "A secret word, phrase, or string of characters used by a user to authenticate their identity and gain access to a system or account", isCorrect: true, rationale: "Passwords act as a primary authentication secret to verify user identity before granting access." },
+                    { text: "A public username displayed openly on profile screens", isCorrect: false, rationale: "Usernames identify accounts publicly, whereas passwords remain secret." },
+                    { text: "A hardware encryption key plugged into USB ports", isCorrect: false, rationale: "This describes a hardware security token." },
+                    { text: "A network router IP address", isCorrect: false, rationale: "This is network addressing." }
+                ]
+            },
+            {
+                question: "What makes a password strong and secure against cyber attacks?",
+                options: [
+                    { text: "Using a combination of uppercase letters, lowercase letters, numbers, and special symbols, with a length of at least 12-14 characters", isCorrect: true, rationale: "Strong passwords use high complexity and length to resist brute-force and dictionary guessing attacks." },
+                    { text: "Using a common dictionary word like 'password123' for easy memorization", isCorrect: false, rationale: "Simple dictionary words are easily guessed by automated hacking programs." },
+                    { text: "Using your own first name and birth year", isCorrect: false, rationale: "Personal info is easily guessed and insecure." },
+                    { text: "Using a single letter of the alphabet", isCorrect: false, rationale: "Extremely short passwords are cracked instantly." }
+                ]
+            },
+            {
+                question: "What is a 'brute-force' password attack?",
+                options: [
+                    { text: "An automated attack where software tries every possible combination of characters until the correct password is guessed", isCorrect: true, rationale: "Brute-force attacks test combinations systematically until the valid password is found." },
+                    { text: "A physical attack where someone smashes a computer with a heavy hammer", isCorrect: false, rationale: "This is physical vandalism, not a cyberattack." },
+                    { text: "A network routing overload caused by too many ping requests", isCorrect: false, rationale: "This describes a Denial of Service (DoS) attack." },
+                    { text: "A printer paper jam caused by thick cardstock paper", isCorrect: false, rationale: "This is a printer malfunction." }
+                ]
+            },
+            {
+                question: "What is a 'dictionary attack'?",
+                options: [
+                    { text: "A password cracking method that systematically tries thousands of common words and phrases from a dictionary list", isCorrect: true, rationale: "Dictionary attacks exploit weak user habits by testing common words and substitutions automatically." },
+                    { text: "A cyberattack that translates foreign languages into English", isCorrect: false, rationale: "This is language translation software." },
+                    { text: "An attack that steals physical Oxford English dictionaries from school libraries", isCorrect: false, rationale: "This is physical theft." },
+                    { text: "A search query on Google for IT definitions", isCorrect: false, rationale: "This is web searching." }
+                ]
+            },
+            {
+                question: "Why is it dangerous for users to reuse the exact same password across multiple different websites and accounts?",
+                options: [
+                    { text: "If one minor website suffers a data breach and leaks the password, hackers can use that exact same password to access all other accounts (credential stuffing)", isCorrect: true, rationale: "Password reuse leads to cascading account takeovers if a single service is compromised." },
+                    { text: "It causes the computer hard disk drive to run out of storage space", isCorrect: false, rationale: "Passwords take up negligible data storage." },
+                    { text: "It permanently locks the internet router's Wi-Fi connection", isCorrect: false, rationale: "This is unrelated." },
+                    { text: "It drains the laptop battery within five minutes", isCorrect: false, rationale: "This is false." }
+                ]
+            },
+            {
+                question: "What is a password manager, and why is it recommended for users?",
+                options: [
+                    { text: "A secure software application that generates, stores, and manages complex, unique passwords for all user accounts behind a single master password", isCorrect: true, rationale: "Password managers allow users to maintain strong, unique passwords everywhere without needing to memorize them all." },
+                    { text: "A human office security guard stationed outside server rooms", isCorrect: false, rationale: "This is physical security personnel." },
+                    { text: "An operating system utility for formatting hard drives", isCorrect: false, rationale: "This is disk management software." },
+                    { text: "A hardware keyboard with built-in fingerprint scanners", isCorrect: false, rationale: "This is biometric hardware." }
+                ]
+            },
+            {
+                question: "Why do systems often enforce password expiration policies requiring users to change passwords every 90 days?",
+                options: [
+                    { text: "To limit the window of opportunity for unauthorized access if a password was previously compromised without the user's knowledge", isCorrect: true, rationale: "Periodic password changes reduce the risk period of stale credentials being exploited." },
+                    { text: "To prevent the computer keyboard keys from wearing out", isCorrect: false, rationale: "Keyboard wear is physical friction, not password policy." },
+                    { text: "To clear temporary cache files from RAM memory", isCorrect: false, rationale: "RAM cache is cleared on reboot." },
+                    { text: "To increase internet broadband speed", isCorrect: false, rationale: "Passwords have no impact on network bandwidth." }
+                ]
+            },
+            {
+                question: "What is 'salting' in password storage security on servers?",
+                options: [
+                    { text: "Adding a unique random string of characters to each user's password before hashing it, protecting against rainbow table attacks", isCorrect: true, rationale: "Salting ensures identical passwords have different hash outputs, neutralizing precomputed rainbow table cracking." },
+                    { text: "Sprinkling table salt over computer motherboards to prevent static electricity", isCorrect: false, rationale: "Salt is corrosive and would destroy electronics." },
+                    { text: "Backing up database files onto portable hard disk drives", isCorrect: false, rationale: "This describes data backups." },
+                    { text: "Encrypting network traffic using HTTPS protocols", isCorrect: false, rationale: "This describes network encryption." }
+                ]
+            },
+            {
+                question: "Why should servers store password 'hashes' rather than storing actual plaintext passwords in their databases?",
+                options: [
+                    { text: "If the database is hacked and breached, attackers only see irreversible cryptographic hashes rather than real plaintext passwords", isCorrect: true, rationale: "Hashing creates a one-way mathematical representation, so even if stolen, original passwords cannot be easily read." },
+                    { text: "Hashes take up zero disk space compared to plaintext", isCorrect: false, rationale: "Hashes have fixed byte lengths." },
+                    { text: "Hashes allow users to log in without typing passwords", isCorrect: false, rationale: "Typing is still required for authentication." },
+                    { text: "Plaintext passwords cannot be processed by microprocessors", isCorrect: false, rationale: "CPUs process text strings easily." }
+                ]
+            },
+            {
+                question: "What is social engineering in the context of password security breaches?",
+                options: [
+                    { text: "Manipulating human psychology to trick individuals into voluntarily handing over confidential passwords or security information", isCorrect: true, rationale: "Social engineering exploits human trust (e.g., pretending to be IT support) rather than hacking technical code." },
+                    { text: "Designing civil engineering bridges and highway roads", isCorrect: false, rationale: "This is civil engineering." },
+                    { text: "Programming automated software scripts in Python", isCorrect: false, rationale: "This is software coding." },
+                    { text: "Configuring network router firewall rules", isCorrect: false, rationale: "This is technical network administration." }
+                ]
+            },
+
+            // 4.2.3 Other Authentication Methods (Questions 21 to 30)
+            {
+                question: "What is biometric authentication?",
+                options: [
+                    { text: "Verifying a user's identity using unique physical or behavioral human characteristics (such as fingerprints, facial recognition, or iris scans)", isCorrect: true, rationale: "Biometrics authenticate users based on unique biological traits that are difficult to forge." },
+                    { text: "Authenticating users using text-based passwords and secret PIN numbers", isCorrect: false, rationale: "PINs and passwords are knowledge-based authentication, not biometrics." },
+                    { text: "Using physical plastic door keys to enter server rooms", isCorrect: false, rationale: "This is traditional physical key access." },
+                    { text: "Entering temporary codes sent via SMS text messages", isCorrect: false, rationale: "This describes token-based SMS verification." }
+                ]
+            },
+            {
+                question: "What are common examples of biometric authentication methods used in modern devices?",
+                options: [
+                    { text: "Fingerprint scanning, facial recognition, iris/retina scanning, and voice recognition", isCorrect: true, rationale: "Smartphones and secure facilities widely use fingerprint sensors, face unlock, and iris scanners." },
+                    { text: "Typing alphanumeric passwords on QWERTY keyboards", isCorrect: false, rationale: "Keyboards are used for text password entry." },
+                    { text: "Swiping magnetic stripe credit cards", isCorrect: false, rationale: "This is card swiping." },
+                    { text: "Scanning 1D supermarket barcodes", isCorrect: false, rationale: "This is barcode scanning." }
+                ]
+            },
+            {
+                question: "What is Two-Factor Authentication (2FA) or Multi-Factor Authentication (MFA)?",
+                options: [
+                    { text: "An authentication process that requires the user to provide two or more different verification factors (e.g., password AND a code sent to a phone)", isCorrect: true, rationale: "MFA combines multiple categories (something you know + something you have/are) for vastly superior account security." },
+                    { text: "Requiring the user to type their exact password twice during login", isCorrect: false, rationale: "Typing the same password twice is still a single factor (something you know)." },
+                    { text: "Using two separate computer monitors side by side", isCorrect: false, rationale: "This describes a multi-monitor display setup." },
+                    { text: "Connecting two routers together via Ethernet", isCorrect: false, rationale: "This is network bridging." }
+                ]
+            },
+            {
+                question: "What are the three main categories of authentication factors used in security systems?",
+                options: [
+                    { text: "Something you know (password/PIN), something you have (smart card/phone), and something you are (biometrics)", isCorrect: true, rationale: "The three pillars of authentication are knowledge, possession, and inherence (biometrics)." },
+                    { text: "Something you print, something you scan, and something you project", isCorrect: false, rationale: "This is incorrect terminology." },
+                    { text: "Input, processing, and output", isCorrect: false, rationale: "This describes the computing IPO cycle." },
+                    { text: "LAN, WAN, and MAN", isCorrect: false, rationale: "These are network types." }
+                ]
+            },
+            {
+                question: "What is a hardware security token (or security key) used in authentication?",
+                options: [
+                    { text: "A physical electronic device (like a USB security key) that generates or holds cryptographic credentials to verify user identity", isCorrect: true, rationale: "Hardware tokens represent 'something you have', providing highly secure authentication against phishing." },
+                    { text: "A plastic token used for riding public subway trains", isCorrect: false, rationale: "This is public transport ticketing." },
+                    { text: "A magnetic stripe hotel room key card", isCorrect: false, rationale: "This is hotel access control." },
+                    { text: "A mechanical desktop calculator", isCorrect: false, rationale: "This is calculation hardware." }
+                ]
+            },
+            {
+                question: "What is a major advantage of biometric authentication over traditional text passwords?",
+                options: [
+                    { text: "Biometric traits cannot be easily forgotten, lost, or guessed, and users do not need to memorize complex character strings", isCorrect: true, rationale: "Biometrics are always carried by the user and cannot be easily forgotten or guessed like text passwords." },
+                    { text: "Biometric systems cost zero money to manufacture", isCorrect: false, rationale: "Biometric sensor hardware requires investment." },
+                    { text: "Biometric systems work with 100% perfection under all physical conditions", isCorrect: false, rationale: "Dirt, injuries, or aging can sometimes interfere with biometric sensors." },
+                    { text: "Biometric data can be changed instantly if stolen", isCorrect: false, rationale: "Unlike passwords, you cannot change your fingerprint or face if compromised." }
+                ]
+            },
+            {
+                question: "What is a disadvantage or privacy concern associated with biometric authentication?",
+                options: [
+                    { text: "If a user's biometric template (like fingerprint data) is stolen in a server breach, it cannot be changed or reset like a compromised password", isCorrect: true, rationale: "You only have one set of fingerprints and facial features; if biometric data leaks, it is permanently compromised." },
+                    { text: "Biometric data takes up 500 terabytes of local storage", isCorrect: false, rationale: "Biometric templates take up very little data space." },
+                    { text: "Biometric authentication requires continuous internet broadband connections", isCorrect: false, rationale: "Many biometric sensors process templates locally offline." },
+                    { text: "Biometric authentication is only available in black and white", isCorrect: false, rationale: "This is false." }
+                ]
+            },
+            {
+                question: "What is a magnetic stripe card or RFID smart card used for in physical access control?",
+                options: [
+                    { text: "Swiping or tapping a card at a doorway reader to authenticate personnel and unlock secure buildings or rooms", isCorrect: true, rationale: "Access control cards represent 'something you have', granting entry when scanned by door readers." },
+                    { text: "Printing architectural blueprints onto paper rolls", isCorrect: false, rationale: "This describes plotters." },
+                    { text: "Scanning multiple-choice student exam bubble sheets", isCorrect: false, rationale: "This describes OMR." },
+                    { text: "Storing high-definition streaming movie files", isCorrect: false, rationale: "This is media storage." }
+                ]
+            },
+            {
+                question: "What happens during a 'transaction transaction verification' (OTP - One-Time Password) login process via SMS or authenticator app?",
+                options: [
+                    { text: "A temporary, single-use numeric code is generated and sent to the user's verified device, which must be entered within a short time window", isCorrect: true, rationale: "OTPs expire quickly and can only be used once, preventing replay attacks even if intercepted." },
+                    { text: "The user's password is permanently deleted from the database", isCorrect: false, rationale: "Passwords remain active." },
+                    { text: "The computer keyboard locks permanently", isCorrect: false, rationale: "This does not happen." },
+                    { text: "The printer prints out a paper receipt", isCorrect: false, rationale: "This is unrelated." }
+                ]
+            },
+            {
+                question: "Which summary best encapsulates network security and authentication (4.2.1 to 4.2.3) in IGCSE ICT?",
+                options: [
+                    { text: "Protecting data transfer requires encryption and secure protocols (HTTPS), while user authentication relies on strong passwords, multi-factor authentication (MFA), and biometrics to prevent unauthorized access", isCorrect: true, rationale: "Secure data transfer relies on encryption, and robust access control combines passwords, multi-factor methods, and biometrics." },
+                    { text: "Network security is achieved solely by turning off computer monitors and unplugging Wi-Fi routers", isCorrect: false, rationale: "Security requires active encryption and authentication controls." },
+                    { text: "Authentication is exclusively performed by physical metal door keys and paper filing cabinets", isCorrect: false, rationale: "Modern IT systems use digital passwords, tokens, and biometrics." },
+                    { text: "Security issues regarding data transfer do not exist in modern computer networks", isCorrect: false, rationale: "Cybersecurity threats like sniffing, malware, and phishing are major network challenges." }
+                ]
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answered = false;
+
+        const questionCounter = document.getElementById("question-counter");
+        const scoreDisplay = document.getElementById("score-display");
+        const questionBox = document.getElementById("question-box");
+        const optionsContainer = document.getElementById("options-container");
+        const feedbackBox = document.getElementById("feedback-box");
+        const nextBtn = document.getElementById("next-btn");
+        const quizContainer = document.getElementById("quiz-container");
+        const resultsContainer = document.getElementById("results-container");
+        const finalScore = document.getElementById("final-score");
+
+        function loadQuestion() {
+            answered = false;
+            feedbackBox.classList.add("hidden");
+            nextBtn.classList.add("hidden");
+            
+            const q = questions[currentQuestionIndex];
+            questionCounter.textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}`;
+            scoreDisplay.textContent = `Score: ${score}`;
+            questionBox.textContent = q.question;
+
+            // Shuffle options array randomly so correct answer is not always first
+            let shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+
+            optionsContainer.innerHTML = "";
+            shuffledOptions.forEach((opt) => {
+                const btn = document.createElement("button");
+                btn.className = "option-btn";
+                btn.textContent = opt.text;
+                btn.onclick = () => selectOption(opt, shuffledOptions);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function selectOption(selectedOpt, shuffledOptions) {
+            if (answered) return;
+            answered = true;
+
+            const allOptionButtons = optionsContainer.children;
+
+            shuffledOptions.forEach((opt, idx) => {
+                allOptionButtons[idx].disabled = true;
+                if (opt.isCorrect) {
+                    allOptionButtons[idx].classList.add("correct");
+                } else if (opt === selectedOpt && !selectedOpt.isCorrect) {
+                    allOptionButtons[idx].classList.add("incorrect");
+                }
+            });
+
+            feedbackBox.classList.remove("hidden");
+            if (selectedOpt.isCorrect) {
+                score++;
+                scoreDisplay.textContent = `Score: ${score}`;
+                feedbackBox.className = "feedback-box correct-feedback";
+                feedbackBox.innerHTML = `<strong>Correct!</strong> ${selectedOpt.rationale}`;
+            } else {
+                feedbackBox.className = "feedback-box incorrect-feedback";
+                feedbackBox.innerHTML = `<strong>Incorrect.</strong> ${selectedOpt.rationale}`;
+            }
+
+            if (currentQuestionIndex < questions.length - 1) {
+                nextBtn.textContent = "Next Question";
+            } else {
+                nextBtn.textContent = "View Results";
+            }
+            nextBtn.classList.remove("hidden");
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();
+            } else {
+                quizContainer.classList.add("hidden");
+                resultsContainer.classList.remove("hidden");
+                finalScore.textContent = `You scored ${score} out of ${questions.length}`;
+            }
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            resultsContainer.classList.add("hidden");
+            quizContainer.classList.remove("hidden");
+            loadQuestion();
+        }
+
+        // Initialize quiz on load
+        loadQuestion();
+    </script>
+</body>
+</html>
